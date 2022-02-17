@@ -23,8 +23,6 @@ const reducer = (state: any, action: { type: any; name: any; value: any }) => {
   switch (action.type) {
     case "set":
       return { ...state, [action.name]: action.value };
-    case "setModuleData":
-      return { ...state, ...action.value };
     default:
       return state;
   }
@@ -32,7 +30,7 @@ const reducer = (state: any, action: { type: any; name: any; value: any }) => {
 
 export const useGlobalContext = () => useContext(globalContext);
 
-function App() {
+export default function App() {
   const [settings, dispatch] = useReducer(reducer, {
     open: false,
     setOpen: (value: boolean) => dispatch({ type: "set", name: "open", value }),
@@ -71,5 +69,3 @@ function App() {
     </globalContext.Provider>
   );
 }
-
-export default App;

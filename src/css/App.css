@@ -13,6 +13,5 @@ body,
 }
 
 .iframe_container html body {
-  background-color: red !important;
   overflow: hidden;
 }
