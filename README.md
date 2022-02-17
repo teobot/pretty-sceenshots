@@ -1,7 +1,7 @@
 # Welcome to pretty-sceenshots 👋
 ![Version](https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000)
-
-> a program to generate pretty sceenshots of your projects of github
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f04577ee-c293-4f4a-a8f6-a648f095e496/deploy-status)](https://app.netlify.com/sites/prettier-screenshots/deploys)
+> a program to generate pretty screenshots of your projects of github
 
 ### 🏠 [Homepage](https://github.com/teobot/pretty-sceenshots#readme)
 
