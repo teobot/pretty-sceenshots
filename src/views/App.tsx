@@ -1,4 +1,4 @@
-import { useReducer, useContext, createContext } from "react";
+import { useContext, createContext, useState } from "react";
 
 import "../css/App.css";
 
@@ -9,41 +9,73 @@ import { Icon } from "semantic-ui-react";
 
 // helpers
 import ColoursHelper from "../helpers/ColoursHelper";
+import OverlayModel from "../models/OverlayModel";
+import DeviceModel from "../models/DeviceModel";
 
 type GlobalContext = {
   open: boolean;
-  setOpen: (value: boolean) => void;
   backgroundColor: string;
-  setBackgroundColor: (value: string) => void;
+  devices: DeviceModel[];
+  setBackgroundColor: (color: string) => void;
+  setOpen: (open: boolean) => void;
+  updateDeviceUrl: (device: DeviceModel, url: string) => void;
+  addDevice: () => void;
+  removeDevice: (id: string) => void;
 };
 
 const globalContext = createContext({} as GlobalContext);
 
-const reducer = (state: any, action: { type: any; name: any; value: any }) => {
-  switch (action.type) {
-    case "set":
-      return { ...state, [action.name]: action.value };
-    default:
-      return state;
-  }
-};
-
 export const useGlobalContext = () => useContext(globalContext);
 
 export default function App() {
-  const [settings, dispatch] = useReducer(reducer, {
-    open: false,
-    setOpen: (value: boolean) => dispatch({ type: "set", name: "open", value }),
-    backgroundColor: ColoursHelper.randomColor(),
-    setBackgroundColor: (value: string) =>
-      dispatch({ type: "set", name: "backgroundColor", value }),
-  });
+  const [open, setOpen] = useState<boolean>(true);
+  const [devices, setDevices] = useState<DeviceModel[]>([]);
+  const [backgroundColor, setBackgroundColor] = useState<string>(
+    ColoursHelper.randomColor()
+  );
+
+  const updateDeviceUrl = (device: DeviceModel, url: string) => {
+    setDevices(
+      devices.map((d) => {
+        if (d.id === device.id) {
+          return { ...d, url };
+        }
+        return d;
+      })
+    );
+  };
+
+  const addDevice = () => {
+    setDevices([
+      ...devices,
+      new DeviceModel(
+        "mobile",
+        new OverlayModel("/phone/iphone-xhr.png", 0, 35, 40),
+        "https://theoclapperton-portfolio.netlify.app/"
+      ),
+    ]);
+  };
+
+  const removeDevice = (id: string) => {
+    setDevices(devices.filter((d: DeviceModel) => d.id !== id));
+  };
 
   return (
-    <globalContext.Provider value={settings}>
+    <globalContext.Provider
+      value={{
+        open,
+        backgroundColor,
+        devices,
+        setBackgroundColor,
+        setOpen,
+        updateDeviceUrl,
+        addDevice,
+        removeDevice,
+      }}
+    >
       <div
         className="App"
-        style={{ padding: 25, backgroundColor: settings.backgroundColor }}
+        style={{ padding: 25, backgroundColor: `#${backgroundColor}` }}
       >
         {/* SETTINGS MODEL */}
         <SettingsView />
@@ -56,9 +88,9 @@ export default function App() {
             top: 15,
             left: 15,
             cursor: "pointer",
-            color: ColoursHelper.invertColor(settings.backgroundColor),
+            color: ColoursHelper.invertColor(backgroundColor),
           }}
-          onClick={() => settings.setOpen(true)}
+          onClick={() => setOpen(true)}
           name="cog"
           circular
         />

@@ -1,8 +1,9 @@
 import MobileDisplay from "../components/MobileDisplay";
 
-import OverlayModel from "../models/OverlayModel";
+import { useGlobalContext } from "./App";
 
 export default function MobileView() {
+  const { devices } = useGlobalContext();
   return (
     <div
       style={{
@@ -13,18 +14,16 @@ export default function MobileView() {
         alignItems: "center",
       }}
     >
-      <MobileDisplay
-        overlayImage={new OverlayModel("/phone/iphone-xhr.png", 30, 35, 40)}
-        srcUrl="https://teobot.github.io/portfolio-build/"
-      />
-      <MobileDisplay
-        overlayImage={new OverlayModel("/phone/iphone-xhr.png", 30, 35, 40)}
-        srcUrl="https://teobot.github.io/portfolio-build/"
-      />
-      <MobileDisplay
-        overlayImage={new OverlayModel("/phone/iphone-xhr.png", 30, 35, 40)}
-        srcUrl="https://teobot.github.io/portfolio-build/"
-      />
+      {devices.map((device, index) => {
+        const { id, type, overlay, url } = device;
+        return (
+          <MobileDisplay
+            key={id + "_device_view"}
+            overlayImage={overlay}
+            srcUrl={url}
+          />
+        );
+      })}
     </div>
   );
 }
