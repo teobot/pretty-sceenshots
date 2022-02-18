@@ -12,7 +12,7 @@ import ColoursHelper from "../helpers/ColoursHelper";
 import OverlayModel from "../models/OverlayModel";
 import DeviceModel from "../models/DeviceModel";
 
-type GlobalContext = {
+type GlobalContextInterface = {
   open: boolean;
   backgroundColor: string;
   devices: DeviceModel[];
@@ -23,7 +23,7 @@ type GlobalContext = {
   removeDevice: (id: string) => void;
 };
 
-const globalContext = createContext({} as GlobalContext);
+const globalContext = createContext({} as GlobalContextInterface);
 
 export const useGlobalContext = () => useContext(globalContext);
 
