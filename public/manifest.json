@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Pretty Screenshots",
+  "name": "a simple app for making screenshots for web based mobile applications.",
   "icons": [
     {
       "src": "favicon.ico",

@@ -1,46 +1,60 @@
-# Getting Started with Create React App
+<h1 align="center">Welcome to pretty-screenshots👋</h1>
+<p align="center">
+    <img src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
+    <a href="https://app.netlify.com/sites/prettier-screenshots/deploys">
+        <img src="https://api.netlify.com/api/v1/badges/f04577ee-c293-4f4a-a8f6-a648f095e496/deploy-status" />
+    </a>
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> Its a client only website for generating screenshots intended for Github READMES.
 
-## Available Scripts
 
-In the project directory, you can run:
+Aims for this project:
+    - generate images for mobile projects
+      - select number of devices
+      - select model of phone
+    - generate images for desktop devices
+    - generate images for code
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Links
+### ✨ [Live link](https://prettier-screenshots.netlify.app/)
+### 🏠 [Github homepage](https://github.com/teobot/pretty-sceenshots#readme)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Project
 
-### `npm test`
+### What is this about? :man_shrugging:
+> Its a client only website for generating screenshots intended for Github READMES.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## Deployment
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Install
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```sh
+npm install
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Usage
 
-### `npm run eject`
+```sh
+npm run start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Run tests
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```sh
+npm run test
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Author
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+👤 **Theo Clapperton**
 
-## Learn More
+* Website: https://theoclapperton-portfolio.netlify.app/
+* Github: [@teobot](https://github.com/teobot)
+* LinkedIn: [@theoClapperton](https://linkedin.com/in/theoClapperton)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Show your support
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Give a ⭐️ if this project helped you!
