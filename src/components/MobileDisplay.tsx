@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState } from "react";
+import OverlayModel from "../models/OverlayModel";
+import DeviceModel from "../models/DeviceModel";
 
 import Iframe from "./Iframe";
 
-export default function MobileDisplay(props: {
-  srcUrl: any;
-  overlayImage: any;
-}) {
-  const imageRef = useRef<any>(null);
+export default function MobileDisplay(props: { device: DeviceModel }) {
+  const { url, overlay, scale } = props.device;
 
-  const { srcUrl, overlayImage } = props;
+  const imageRef = useRef<any>(null);
 
   const [imageHeight, setImageHeight] = useState(0);
   const [imageWidth, setImageWidth] = useState(0);
@@ -25,8 +24,8 @@ export default function MobileDisplay(props: {
   return (
     <div
       style={{
-        height: 800,
-        width: 400,
+        height: 900 * scale,
+        width: 425 * scale,
         position: "relative",
         display: "flex",
         justifyContent: "center",
@@ -47,17 +46,20 @@ export default function MobileDisplay(props: {
           width: "100%",
           pointerEvents: "none",
         }}
-        src={require(`../images${overlayImage.imageSrc}`)}
+        src={require(`../images${overlay.imageSrc}`)}
       />
       <Iframe
-        src={srcUrl}
-        height={imageHeight - overlayImage.imageHeightReduction}
-        width={imageWidth - overlayImage.imageWidthReduction}
+        src={url}
+        height={imageHeight - overlay.borderHeight * scale}
+        width={imageWidth - overlay.borderWidth * scale}
         title="test"
         style={{
           overflow: "hidden",
-          borderRadius: overlayImage.imageBorderRadius,
-          padding: 5,
+          borderRadius: overlay.borderRadius * scale,
+          paddingLeft: overlay?.offset?.left * scale || 5,
+          paddingTop: overlay?.offset?.top * scale || 5,
+          paddingBottom: overlay?.offset?.bottom * scale || 5,
+          paddingRight: overlay?.offset?.right * scale || 5,
         }}
       />
     </div>

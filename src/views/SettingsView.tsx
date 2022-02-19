@@ -1,18 +1,12 @@
-import { useRef, useEffect, useState } from "react";
-
-import {
-  Modal,
-  Segment,
-  Header,
-  Grid,
-  Button,
-  Input,
-  TextArea,
-} from "semantic-ui-react";
+import { Modal, Segment, Header, Grid, Button } from "semantic-ui-react";
 
 import { useGlobalContext } from "../views/App";
 
 import { SwatchesPicker, PhotoshopPicker } from "react-color";
+
+import DeviceModel from "../models/DeviceModel";
+
+import MiniMobileDisplay from "../components/MiniMobileDisplay";
 
 export default function SettingsView() {
   const {
@@ -21,9 +15,7 @@ export default function SettingsView() {
     devices,
     setBackgroundColor,
     setOpen,
-    updateDeviceUrl,
     addDevice,
-    removeDevice,
   } = useGlobalContext();
 
   return (
@@ -35,6 +27,36 @@ export default function SettingsView() {
     >
       <Modal.Header>Settings</Modal.Header>
       <Modal.Content>
+        {/* DEVICE SETTINGS */}
+        <div>
+          <Header as="h2" attached="top">
+            Device Settings
+          </Header>
+          <Segment attached>
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-evenly",
+                alignItems: "center",
+                padding: 50,
+              }}
+            >
+              {devices.map((device: DeviceModel, index: number) => (
+                <MiniMobileDisplay device={device} />
+              ))}
+              {devices.length < 3 && (
+                <Button
+                  onClick={addDevice}
+                  icon="plus"
+                  positive
+                  circular
+                  style={{ height: 100, width: 100 }}
+                />
+              )}
+            </div>
+          </Segment>
+        </div>
         {/* COLOUR PICKER */}
         <div>
           <Header as="h2" attached="top">
@@ -59,80 +81,6 @@ export default function SettingsView() {
                 />
               </Grid.Column>
             </Grid>
-          </Segment>
-        </div>
-        {/* DEVICE SETTINGS */}
-        <div>
-          <Header as="h2" attached="top">
-            Device Settings
-          </Header>
-          <Segment attached>
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "space-evenly",
-                alignItems: "center",
-              }}
-            >
-              {devices.map((device, index) => {
-                const { id, type, overlay, url } = device;
-                return (
-                  <div
-                    key={id}
-                    style={{
-                      width: 200,
-                      height: 400,
-                      backgroundImage: `url(${require("../images" +
-                        overlay.imageSrc)})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                      borderRadius: overlay.imageBorderRadius,
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      padding: overlay.imageWidthReduction / 2,
-                      position: "relative",
-                    }}
-                  >
-                    <div
-                      style={{
-                        height: "90%",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                      }}
-                    >
-                      <div>
-                        <label>Website URL</label>
-                        <TextArea
-                          onChange={(e: any) =>
-                            updateDeviceUrl(device, e.target.value)
-                          }
-                          value={url}
-                          style={{ width: "100%" }}
-                        />
-                      </div>
-                      <div>
-                        <Button negative onClick={() => removeDevice(id)}>
-                          Remove
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-              {devices.length < 3 && (
-                <Button
-                  onClick={addDevice}
-                  icon="plus"
-                  positive
-                  circular
-                  style={{ height: 100, width: 100 }}
-                />
-              )}
-            </div>
           </Segment>
         </div>
       </Modal.Content>

@@ -1,4 +1,5 @@
 import MobileDisplay from "../components/MobileDisplay";
+import DeviceModel from "../models/DeviceModel";
 
 import { useGlobalContext } from "./App";
 
@@ -14,15 +15,9 @@ export default function MobileView() {
         alignItems: "center",
       }}
     >
-      {devices.map((device, index) => {
-        const { id, type, overlay, url } = device;
-        return (
-          <MobileDisplay
-            key={id + "_device_view"}
-            overlayImage={overlay}
-            srcUrl={url}
-          />
-        );
+      {devices.map((device: DeviceModel, index: number) => {
+        const { id } = device;
+        return <MobileDisplay key={id + "_device_view"} device={device} />;
       })}
     </div>
   );

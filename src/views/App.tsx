@@ -11,6 +11,7 @@ import { Icon } from "semantic-ui-react";
 import ColoursHelper from "../helpers/ColoursHelper";
 import OverlayModel from "../models/OverlayModel";
 import DeviceModel from "../models/DeviceModel";
+import overlaysModels from "../config/OverlayModels";
 
 type GlobalContextInterface = {
   open: boolean;
@@ -21,6 +22,7 @@ type GlobalContextInterface = {
   updateDeviceUrl: (device: DeviceModel, url: string) => void;
   addDevice: () => void;
   removeDevice: (id: string) => void;
+  changeDeviceOverlay: (id: string, overlay: OverlayModel) => void;
 };
 
 const globalContext = createContext({} as GlobalContextInterface);
@@ -29,9 +31,15 @@ export const useGlobalContext = () => useContext(globalContext);
 
 export default function App() {
   const [open, setOpen] = useState<boolean>(true);
-  const [devices, setDevices] = useState<DeviceModel[]>([]);
+  const [devices, setDevices] = useState<DeviceModel[]>([
+    new DeviceModel(
+      "mobile",
+      overlaysModels[0],
+      "https://theoclapperton-portfolio.netlify.app/"
+    ),
+  ]);
   const [backgroundColor, setBackgroundColor] = useState<string>(
-    ColoursHelper.randomColor()
+    `#${ColoursHelper.randomColor()}`
   );
 
   const updateDeviceUrl = (device: DeviceModel, url: string) => {
@@ -50,7 +58,7 @@ export default function App() {
       ...devices,
       new DeviceModel(
         "mobile",
-        new OverlayModel("/phone/iphone-xhr.png", 0, 35, 40),
+        overlaysModels[0],
         "https://theoclapperton-portfolio.netlify.app/"
       ),
     ]);
@@ -58,6 +66,18 @@ export default function App() {
 
   const removeDevice = (id: string) => {
     setDevices(devices.filter((d: DeviceModel) => d.id !== id));
+  };
+
+  const changeDeviceOverlay = (id: string, overlay: OverlayModel) => {
+    // change the overlay of the device
+    setDevices(
+      devices.map((d: DeviceModel) => {
+        if (d.id === id) {
+          return { ...d, overlay };
+        }
+        return d;
+      })
+    );
   };
 
   return (
@@ -71,11 +91,12 @@ export default function App() {
         updateDeviceUrl,
         addDevice,
         removeDevice,
+        changeDeviceOverlay,
       }}
     >
       <div
         className="App"
-        style={{ padding: 25, backgroundColor: `#${backgroundColor}` }}
+        style={{ padding: 25, backgroundColor: backgroundColor }}
       >
         {/* SETTINGS MODEL */}
         <SettingsView />
