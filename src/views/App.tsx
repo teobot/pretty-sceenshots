@@ -31,6 +31,7 @@ export const useGlobalContext = () => useContext(globalContext);
 
 export default function App() {
   const [open, setOpen] = useState<boolean>(true);
+  
   const [devices, setDevices] = useState<DeviceModel[]>([
     new DeviceModel(
       "mobile",
@@ -38,9 +39,8 @@ export default function App() {
       "https://theoclapperton-portfolio.netlify.app/"
     ),
   ]);
-  const [backgroundColor, setBackgroundColor] = useState<string>(
-    `#${ColoursHelper.randomColor()}`
-  );
+
+  const [backgroundColor, setBackgroundColor] = useState<string>("#0288D1");
 
   const updateDeviceUrl = (device: DeviceModel, url: string) => {
     setDevices(
