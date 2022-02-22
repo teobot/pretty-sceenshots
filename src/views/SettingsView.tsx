@@ -8,14 +8,18 @@ import DeviceModel from "../models/DeviceModel";
 
 import MiniMobileDisplay from "../components/MiniMobileDisplay";
 
+import backgroundDesigns from "../css/backgrounds";
+
 export default function SettingsView() {
   const {
     open,
     backgroundColor,
     devices,
-    setBackgroundColor,
+    updateBackgroundColor,
     setOpen,
     addDevice,
+    backgroundDesign,
+    setBackgroundDesign,
   } = useGlobalContext();
 
   return (
@@ -63,24 +67,76 @@ export default function SettingsView() {
             Background Color
           </Header>
           <Segment attached>
-            <Grid columns={2} stretched>
-              <Grid.Column width={9}>
-                <PhotoshopPicker
-                  color={backgroundColor}
-                  onChange={(color: any) => setBackgroundColor(color.hex)}
-                />
-              </Grid.Column>
-              <Grid.Column width={7}>
-                <SwatchesPicker
-                  height={348}
-                  width={425}
-                  color={backgroundColor}
-                  onChangeComplete={(color: any) =>
-                    setBackgroundColor(color.hex)
-                  }
-                />
-              </Grid.Column>
-            </Grid>
+            <Grid.Row>
+              <Grid columns={2} stretched>
+                <Grid.Column width={9}>
+                  <PhotoshopPicker
+                    color={backgroundColor}
+                    onChange={(color: any) => updateBackgroundColor(color.hex)}
+                    onAccept={() => updateBackgroundColor(backgroundColor)}
+                  />
+                </Grid.Column>
+                <Grid.Column width={7}>
+                  <SwatchesPicker
+                    height={348}
+                    width={425}
+                    color={backgroundColor}
+                    onChangeComplete={(color: any) =>
+                      updateBackgroundColor(color.hex)
+                    }
+                  />
+                </Grid.Column>
+              </Grid>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid columns={2}>
+                <Grid.Column width={9}>
+                  {backgroundDesigns.map((design: any) => (
+                    <div
+                      key={Math.random()}
+                      style={{
+                        ...design,
+                        height: 50,
+                        width: 100,
+                        margin: 5,
+                        float: "left",
+                        cursor: "pointer",
+                        boxShadow: "0px 0px 5px black",
+                        ...(backgroundDesign === design && {
+                          border: "3px solid black",
+                        }),
+                      }}
+                      onClick={() => setBackgroundDesign(design)}
+                    />
+                  ))}
+                </Grid.Column>
+                <Grid.Column width={7}>
+                  {backgroundDesign ? (
+                    <div
+                      style={{
+                        height: "100%",
+                        width: "100%",
+                        ...backgroundDesign,
+                      }}
+                    />
+                  ) : (
+                    <div
+                      style={{
+                        height: "100%",
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        fontSize: "2em",
+                        boxShadow: "0px 0px 10px black",
+                      }}
+                    >
+                      Select a design to preview
+                    </div>
+                  )}
+                </Grid.Column>
+              </Grid>
+            </Grid.Row>
           </Segment>
         </div>
       </Modal.Content>

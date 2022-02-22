@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import OverlayModel from "../models/OverlayModel";
+
 import DeviceModel from "../models/DeviceModel";
 
 import Iframe from "./Iframe";
 
 export default function MobileDisplay(props: { device: DeviceModel }) {
-  const { url, overlay, scale } = props.device;
+  const { url, overlay, scale, zoom } = props.device;
 
   const imageRef = useRef<any>(null);
 
@@ -19,7 +19,7 @@ export default function MobileDisplay(props: { device: DeviceModel }) {
         setImageWidth(imageRef.current.offsetWidth);
       }
     }
-  }, [imageRef]);
+  }, [imageRef, scale]);
 
   return (
     <div
@@ -36,7 +36,6 @@ export default function MobileDisplay(props: { device: DeviceModel }) {
         alt="mobile"
         ref={imageRef}
         style={{
-          zIndex: 1000,
           position: "absolute",
           top: 0,
           left: 0,
@@ -53,13 +52,15 @@ export default function MobileDisplay(props: { device: DeviceModel }) {
         height={imageHeight - overlay.borderHeight * scale}
         width={imageWidth - overlay.borderWidth * scale}
         title="test"
+        className=""
         style={{
           overflow: "hidden",
           borderRadius: overlay.borderRadius * scale,
-          paddingLeft: overlay?.offset?.left * scale || 5,
-          paddingTop: overlay?.offset?.top * scale || 5,
-          paddingBottom: overlay?.offset?.bottom * scale || 5,
-          paddingRight: overlay?.offset?.right * scale || 5,
+          paddingLeft: overlay?.offset?.left * scale || scale,
+          paddingTop: overlay?.offset?.top * scale || scale,
+          paddingBottom: overlay?.offset?.bottom * scale || scale,
+          paddingRight: overlay?.offset?.right * scale || scale,
+          zoom: zoom,
         }}
       />
     </div>

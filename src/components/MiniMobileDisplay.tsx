@@ -1,13 +1,19 @@
 import { useGlobalContext } from "../views/App";
 
 import DeviceModel from "../models/DeviceModel";
+
 import overlaysModels from "../config/OverlayModels";
 
-import { TextArea, Dropdown, Button } from "semantic-ui-react";
+import { TextArea, Dropdown, Button, Form } from "semantic-ui-react";
 
 export default function MiniMobileDisplay(props: any) {
-  const { updateDeviceUrl, removeDevice, changeDeviceOverlay } =
-    useGlobalContext();
+  const {
+    updateDeviceUrl,
+    removeDevice,
+    changeDeviceOverlay,
+    setDeviceScale,
+    setDeviceZoom,
+  } = useGlobalContext();
 
   const overlayList = overlaysModels.map((overlay) => ({
     key: overlay.id,
@@ -15,8 +21,8 @@ export default function MiniMobileDisplay(props: any) {
     value: overlay.id,
   }));
 
-  const { id, type, overlay, url } = props.device as DeviceModel;
-  
+  const { id, overlay, url, scale, zoom } = props.device as DeviceModel;
+
   return (
     <div
       key={id}
@@ -54,15 +60,19 @@ export default function MiniMobileDisplay(props: any) {
           alignItems: "center",
         }}
       >
-        <div>
-          <label>Website URL</label>
-          <TextArea
-            onChange={(e: any) => updateDeviceUrl(props.device, e.target.value)}
-            value={url}
-            style={{ width: "100%" }}
-          />
-          <label>Overlay</label>
-          <div style={{ padding: "0px 5px" }}>
+        <Form>
+          <Form.Field>
+            <label>Website URL</label>
+            <TextArea
+              onChange={(e: any) =>
+                updateDeviceUrl(props.device, e.target.value)
+              }
+              value={url}
+              style={{ width: "100%" }}
+            />
+          </Form.Field>
+          <Form.Field>
+            <label>Overlay</label>
             <Dropdown
               placeholder="Device Overlay"
               selection
@@ -76,8 +86,30 @@ export default function MiniMobileDisplay(props: any) {
                 }
               }}
             />
-          </div>
-        </div>
+          </Form.Field>
+          <Form.Field>
+            <label>Device Scale : {scale}</label>
+            <input
+              type="range"
+              min="1"
+              max="20"
+              value={scale * 10}
+              onChange={(e) =>
+                setDeviceScale(id, parseInt(e.target.value) / 10)
+              }
+            />
+          </Form.Field>
+          <Form.Field>
+            <label>Device Zoom : {zoom}</label>
+            <input
+              type="range"
+              min="1"
+              max="20"
+              value={zoom * 10}
+              onChange={(e) => setDeviceZoom(id, parseInt(e.target.value) / 10)}
+            />
+          </Form.Field>
+        </Form>
         <div>
           <Button negative onClick={() => removeDevice(id)}>
             Remove
