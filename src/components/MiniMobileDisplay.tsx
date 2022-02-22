@@ -3,7 +3,7 @@ import { useGlobalContext } from "../views/App";
 import DeviceModel from "../models/DeviceModel";
 import overlaysModels from "../config/OverlayModels";
 
-import { TextArea, Dropdown, Button } from "semantic-ui-react";
+import { TextArea, Dropdown, Button, Form } from "semantic-ui-react";
 
 export default function MiniMobileDisplay(props: any) {
   const { updateDeviceUrl, removeDevice, changeDeviceOverlay } =
@@ -16,7 +16,7 @@ export default function MiniMobileDisplay(props: any) {
   }));
 
   const { id, type, overlay, url } = props.device as DeviceModel;
-  
+
   return (
     <div
       key={id}
@@ -54,15 +54,19 @@ export default function MiniMobileDisplay(props: any) {
           alignItems: "center",
         }}
       >
-        <div>
-          <label>Website URL</label>
-          <TextArea
-            onChange={(e: any) => updateDeviceUrl(props.device, e.target.value)}
-            value={url}
-            style={{ width: "100%" }}
-          />
-          <label>Overlay</label>
-          <div style={{ padding: "0px 5px" }}>
+        <Form>
+          <Form.Field>
+            <label>Website URL</label>
+            <TextArea
+              onChange={(e: any) =>
+                updateDeviceUrl(props.device, e.target.value)
+              }
+              value={url}
+              style={{ width: "100%" }}
+            />
+          </Form.Field>
+          <Form.Field>
+            <label>Overlay</label>
             <Dropdown
               placeholder="Device Overlay"
               selection
@@ -76,8 +80,8 @@ export default function MiniMobileDisplay(props: any) {
                 }
               }}
             />
-          </div>
-        </div>
+          </Form.Field>
+        </Form>
         <div>
           <Button negative onClick={() => removeDevice(id)}>
             Remove
