@@ -36,7 +36,6 @@ export default function MobileDisplay(props: { device: DeviceModel }) {
         alt="mobile"
         ref={imageRef}
         style={{
-          zIndex: 1000,
           position: "absolute",
           top: 0,
           left: 0,
