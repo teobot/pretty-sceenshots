@@ -73,6 +73,7 @@ export default function SettingsView() {
                   <PhotoshopPicker
                     color={backgroundColor}
                     onChange={(color: any) => updateBackgroundColor(color.hex)}
+                    onAccept={() => updateBackgroundColor(backgroundColor)}
                   />
                 </Grid.Column>
                 <Grid.Column width={7}>
@@ -92,6 +93,7 @@ export default function SettingsView() {
                 <Grid.Column width={9}>
                   {backgroundDesigns.map((design: any) => (
                     <div
+                      key={Math.random()}
                       style={{
                         ...design,
                         height: 50,
@@ -100,6 +102,9 @@ export default function SettingsView() {
                         float: "left",
                         cursor: "pointer",
                         boxShadow: "0px 0px 5px black",
+                        ...(backgroundDesign === design && {
+                          border: "3px solid black",
+                        }),
                       }}
                       onClick={() => setBackgroundDesign(design)}
                     />
