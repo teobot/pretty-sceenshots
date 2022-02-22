@@ -10,11 +10,16 @@
 
 
 Aims for this project:
-    - generate images for mobile projects
-      - select number of devices
-      - select model of phone
-    - generate images for desktop devices
-    - generate images for code
+- generate images for mobile projects
+    - select number of devices
+    - select model of phone
+- generate images for desktop devices
+- generate images for code
+
+
+![banner1](https://github.com/teobot/pretty-sceenshots/blob/main/src/images/banner-1.jpg?raw=true)
+![banner2](https://github.com/teobot/pretty-sceenshots/blob/main/src/images/banner-2.jpg?raw=true)
+![banner3](https://github.com/teobot/pretty-sceenshots/blob/main/src/images/banner-3.jpg?raw=true)
 
 
 ## Links
