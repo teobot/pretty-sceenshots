@@ -17,12 +17,14 @@ type GlobalContextInterface = {
   open: boolean;
   backgroundColor: string;
   devices: DeviceModel[];
-  setBackgroundColor: (color: string) => void;
+  updateBackgroundColor: (color: string) => void;
   setOpen: (open: boolean) => void;
   updateDeviceUrl: (device: DeviceModel, url: string) => void;
   addDevice: () => void;
   removeDevice: (id: string) => void;
   changeDeviceOverlay: (id: string, overlay: OverlayModel) => void;
+  backgroundDesign: any;
+  setBackgroundDesign: (design: any) => void;
 };
 
 const globalContext = createContext({} as GlobalContextInterface);
@@ -31,7 +33,7 @@ export const useGlobalContext = () => useContext(globalContext);
 
 export default function App() {
   const [open, setOpen] = useState<boolean>(true);
-  
+
   const [devices, setDevices] = useState<DeviceModel[]>([
     new DeviceModel(
       "mobile",
@@ -41,6 +43,8 @@ export default function App() {
   ]);
 
   const [backgroundColor, setBackgroundColor] = useState<string>("#0288D1");
+
+  const [backgroundDesign, setBackgroundDesign] = useState<any>(null);
 
   const updateDeviceUrl = (device: DeviceModel, url: string) => {
     setDevices(
@@ -80,23 +84,37 @@ export default function App() {
     );
   };
 
+  const updateBackgroundColor = (colour: string) => {
+    setBackgroundDesign(null);
+    setBackgroundColor(colour);
+  };
+
   return (
     <globalContext.Provider
       value={{
         open,
         backgroundColor,
         devices,
-        setBackgroundColor,
+        updateBackgroundColor,
         setOpen,
         updateDeviceUrl,
         addDevice,
         removeDevice,
         changeDeviceOverlay,
+        backgroundDesign,
+        setBackgroundDesign,
       }}
     >
       <div
         className="App"
-        style={{ padding: 25, backgroundColor: backgroundColor }}
+        style={{
+          padding: 25,
+          ...(backgroundDesign
+            ? backgroundDesign
+            : {
+                backgroundColor: backgroundColor,
+              }),
+        }}
       >
         {/* SETTINGS MODEL */}
         <SettingsView />
@@ -114,6 +132,7 @@ export default function App() {
           onClick={() => setOpen(true)}
           name="cog"
           circular
+          inverted={backgroundDesign ? true : false}
         />
 
         {/* MOBILE VIEW */}
