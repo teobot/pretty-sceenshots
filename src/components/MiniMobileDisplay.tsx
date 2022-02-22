@@ -1,13 +1,19 @@
 import { useGlobalContext } from "../views/App";
 
 import DeviceModel from "../models/DeviceModel";
+
 import overlaysModels from "../config/OverlayModels";
 
 import { TextArea, Dropdown, Button, Form } from "semantic-ui-react";
 
 export default function MiniMobileDisplay(props: any) {
-  const { updateDeviceUrl, removeDevice, changeDeviceOverlay } =
-    useGlobalContext();
+  const {
+    updateDeviceUrl,
+    removeDevice,
+    changeDeviceOverlay,
+    setDeviceScale,
+    setDeviceZoom,
+  } = useGlobalContext();
 
   const overlayList = overlaysModels.map((overlay) => ({
     key: overlay.id,
@@ -15,7 +21,7 @@ export default function MiniMobileDisplay(props: any) {
     value: overlay.id,
   }));
 
-  const { id, type, overlay, url } = props.device as DeviceModel;
+  const { id, overlay, url, scale, zoom } = props.device as DeviceModel;
 
   return (
     <div
@@ -79,6 +85,28 @@ export default function MiniMobileDisplay(props: any) {
                   changeDeviceOverlay(id, overlay);
                 }
               }}
+            />
+          </Form.Field>
+          <Form.Field>
+            <label>Device Scale : {scale}</label>
+            <input
+              type="range"
+              min="1"
+              max="20"
+              value={scale * 10}
+              onChange={(e) =>
+                setDeviceScale(id, parseInt(e.target.value) / 10)
+              }
+            />
+          </Form.Field>
+          <Form.Field>
+            <label>Device Zoom : {zoom}</label>
+            <input
+              type="range"
+              min="1"
+              max="20"
+              value={zoom * 10}
+              onChange={(e) => setDeviceZoom(id, parseInt(e.target.value) / 10)}
             />
           </Form.Field>
         </Form>

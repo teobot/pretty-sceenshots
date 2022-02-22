@@ -7,6 +7,7 @@ export default function Iframe(props: {
   title: any;
   style: any;
   scrolling?: any;
+  className: any;
 }) {
   const id = `iframe-${Math.random()}`;
 
@@ -18,7 +19,7 @@ export default function Iframe(props: {
     <iframe
       id={id}
       ref={frameRef}
-      className="iframe_container"
+      className={props.className}
       style={style}
       title={title}
       src={src}

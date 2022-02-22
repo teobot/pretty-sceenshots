@@ -11,7 +11,3 @@ body,
   margin: 0;
   padding: 0;
 }
-
-.iframe_container html body {
-  overflow: hidden;
-}

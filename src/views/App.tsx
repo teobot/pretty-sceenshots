@@ -25,6 +25,8 @@ type GlobalContextInterface = {
   changeDeviceOverlay: (id: string, overlay: OverlayModel) => void;
   backgroundDesign: any;
   setBackgroundDesign: (design: any) => void;
+  setDeviceScale: (id: string, scale: number) => void;
+  setDeviceZoom: (id: string, zoom: number) => void;
 };
 
 const globalContext = createContext({} as GlobalContextInterface);
@@ -89,6 +91,29 @@ export default function App() {
     setBackgroundColor(colour);
   };
 
+  const setDeviceScale = (id: string, scale: number) => {
+    // change the scale of the device
+    setDevices(
+      devices.map((d: DeviceModel) => {
+        if (d.id === id) {
+          return { ...d, scale };
+        }
+        return d;
+      })
+    );
+  };
+
+  const setDeviceZoom = (id: string, zoom: number) => {
+    setDevices(
+      devices.map((d: DeviceModel) => {
+        if (d.id === id) {
+          return { ...d, zoom };
+        }
+        return d;
+      })
+    );
+  };
+
   return (
     <globalContext.Provider
       value={{
@@ -103,6 +128,8 @@ export default function App() {
         changeDeviceOverlay,
         backgroundDesign,
         setBackgroundDesign,
+        setDeviceScale,
+        setDeviceZoom
       }}
     >
       <div
